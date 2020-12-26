@@ -3,7 +3,7 @@ const Post = require('../models/post');
 
 exports.test = async (req, res) => {
     try {
-        res.send({ message: 'test!' });
+        res.send({ message: 'test!!!!' });
     }
     catch(err) {
         console.error(err);
