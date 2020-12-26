@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": "password",
+    "database": "TEST",
+    "host": "mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "admin",
+    "password": "password",
+    "database": "TEST",
+    "host": "mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "admin",
+    "password": "password",
+    "database": "TEST",
+    "host": "mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com",
+    "dialect": "mysql"
+  }
+}
