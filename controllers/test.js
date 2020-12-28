@@ -1,8 +1,10 @@
 const User = require('../models/user');
-const Post = require('../models/post');
+const Post = require('../models/lesson');
+const db = require('../config/db');
 
-exports.test = async (req, res) => {
+exports.test = async (req, res, next) => {
     try {
+        console.log(req.user);
         res.send({ message: 'test!!!!' });
     }
     catch(err) {
@@ -10,14 +12,15 @@ exports.test = async (req, res) => {
     }
 };
 
-exports.testDB = async (req, res) => {
+exports.testDB = async (req, res, next) => {
     try {
-        const result = await User.findOne({ where: { email: 'gksrlfw@naver.com' }});
-        console.log(result.email);
-        res.send(`find User: ${result.email}`);
+        console.log('testDB...');
+        const [results, fields] = await db.promise().execute('select * from users');
+        console.log(results);
+        res.send(`find User: ${results}`);
     }
     catch(err) {
-        console.error(err);
+        next(err);
     }
 };
 

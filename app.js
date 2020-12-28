@@ -5,21 +5,34 @@ const path = require('path');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const { sequelize } = require('./models');
+const db = require('./config/db');
+const passport = require('passport');
+const passportConfig = require('./utils/passport');
+const { createAll, deleteAll } = require('./config/table');
 
 dotenv.config();
+passportConfig();
 
 const indexRouter = require('./routes');
 
 const app = express();
 app.set('port', 3000);
-sequelize.sync({ force: false })
-  .then(() => {
-    console.log('데이터베이스 연결 성공');
-  })
-  .catch((err) => {
+
+db.connect((err) => {
+  if(err) throw err;
+  console.log('mysql connected...');
+});
+
+(async () => {
+  try {
+    // await deleteAll();
+    // await createAll();
+  }
+  catch(err) {
     console.error(err);
-  });
+  }
+})();
+
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -35,20 +48,22 @@ app.use(session({
     secure: false,
   },
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('/', indexRouter);
 
 app.use((req, res, next) => {
-  const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
-  error.status = 404;
-  next(error);
+  // res.status(404).send(`${req.method} ${req.url} 라우터가 없습니다.`);
+  res.status(404).send(`해당 페이지가 존재하지 않습니다!`);
 });
 
 
 // 에러처리 미들웨어
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);    
-  res.send(err.message);
+  console.error(err);
+  res.status(500).send(err.message);
 });
 
 app.listen(app.get('port'), () => {
