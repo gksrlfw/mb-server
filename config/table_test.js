@@ -101,8 +101,6 @@ exports.createAll = async () => {
         const hash = await encodePassword('gksrlfw123');
         const SQL = `INSERT INTO USERS(NICK, PASSWORD, EMAIL) VALUES('한길이', ?, 'gksrlfw@naver');`;
         await db.promise().execute(SQL, [hash]);
-        // const SQL2 = `INSERT INTO USERS(NICK, PASSWORD, EMAIL) VALUES('세길이', ?, 'enrlfw@naver');`;
-        // await db.promise().execute(SQL2, [hash]);
     }
     catch(err) {
         console.error(err);

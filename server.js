@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const passport = require('passport');
 const passportConfig = require('./utils/passport');
-const db = require('./config/db_test');
+const db = require('./config/db');
 const { createAll, deleteAll } = require('./config/table');
 
 dotenv.config();

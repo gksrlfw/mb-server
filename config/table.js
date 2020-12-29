@@ -99,7 +99,7 @@ exports.createAll = async () => {
         await db.promise().execute(CREATE_COMMENTS);
 
         const hash = await encodePassword('gksrlfw123');
-        const SQL = `INSERT INTO USERS(NICK, PASSWORD, EMAIL) VALUES('두길이', ?, 'gksrlfw@naver');`;
+        const SQL = `INSERT INTO USERS(NICK, PASSWORD, EMAIL) VALUES('한길이', ?, 'gksrlfw@naver');`;
         await db.promise().execute(SQL, [hash]);
     }
     catch(err) {

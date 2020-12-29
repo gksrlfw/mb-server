@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { test, testDB, testpost, testpost2 } = require('../controllers/exam');
 const { authEmail, join, login, logout, refresh } = require('../controllers/auth');
-const { getUserProfile, editUserPassword, editUserProfile, getMyPage } = require('../controllers/user');
-const { getMain } = require('../controllers/main');
+// const { getUserProfile, editUserPassword, editUserProfile, getMyPage } = require('../controllers/user');
+// const { getMain } = require('../controllers/main');
 
 const { isLogin, isNotLogin } = require('../utils/authMiddleware');
 const { verifyToken } = require('../utils/jsonwebtoken');
@@ -24,16 +24,16 @@ router.post('/auth/join/ecode', isNotLogin, authEmail);
 router.post('/auth/join', isNotLogin, join);
 router.post('/auth/login', isNotLogin, login);
 router.get('/auth/logout', isLogin, logout);
-router.get('/auth/refresh', verifyToken, refresh);
+// router.get('/auth/refresh', verifyToken, refresh);
 
 /* User */
-router.get('/user/profile/:uid', isLogin, getUserProfile);
-router.update('/user/profile/edit/:uid', isLogin, editUserProfile);
-router.update('/user/profile/editpw/:uid', isLogin, editUserPassword);
-router.get('/user/mypage/:uid', isLogin, getMyPage);
+// router.get('/user/profile/:uid', isLogin, getUserProfile);
+// router.update('/user/profile/edit/:uid', isLogin, editUserProfile);
+// router.update('/user/profile/editpw/:uid', isLogin, editUserPassword);
+// router.get('/user/mypage/:uid', isLogin, getMyPage);
 
 /* Main */
-router.get('/main', getMain);
+// router.get('/main', getMain);
 
 /* Lesson */
 
