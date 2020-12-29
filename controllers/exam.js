@@ -1,5 +1,3 @@
-const User = require('../models/user');
-const Post = require('../models/lesson');
 const db = require('../config/db');
 
 exports.test = async (req, res, next) => {

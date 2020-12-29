@@ -1,5 +1,6 @@
 const { encodePassword, decodePassword } = require('../utils/bcrypt');
 const { sendAuthEmail } = require('../utils/nodemailer');
+
 class UserService {
     db;
     constructor(db) {
@@ -21,10 +22,14 @@ class UserService {
             console.error(err);
         }
     }
-
+    /* authMail을 안했으면 이게 안되게 해줘야하는데... 디비에서 검사하는거 이외에 방법을 모르겠다.*/
     async join(email, password, nick) {
         try {
             console.log('join: service', email, password, nick);
+            // 위에서 확인했지만 한번더 해주자
+            const _SQL = `SELECT * FROM USERS WHERE EMAIL=?`;
+            let [results, fields] = await this.db.promise().execute(_SQL, [email]);
+            if(results.length) return { status: 403, message: '이미 가입되어있는 이메일입니다. 다른 이메일로 시도해주세요' }
             const SQL = `INSERT INTO USERS(EMAIL, PASSWORD, NICK) VALUES(?,?,?)`;
             const hash = await encodePassword(password);
             await this.db.promise().execute(SQL, [email, hash, nick]);
@@ -48,6 +53,10 @@ class UserService {
         catch(err) {
             console.error(err);
         }
+    }
+
+    async logout() {
+
     }
 }
 
