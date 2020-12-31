@@ -18,7 +18,7 @@ describe('POST /auth/login', () => {
         .expect(403, done)
     });
 
-    test('login: right request', async (done) => {
+    test('login: correct request', async (done) => {
         request(app)
         .post('/auth/login')
         .send({

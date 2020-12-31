@@ -77,3 +77,14 @@ exports.logout = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.relogin = async (req, res, next) => {
+    try {
+        console.log('logout: relogin');
+        if(req.isAuthenticated()) res.status(200).send(req.user);
+        else res.status(500).send('로그인이 풀린상태입니다. 다시 로그인해주세요!');
+    }
+    catch(err) {
+        next(err);
+    }
+};

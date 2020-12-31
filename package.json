@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app",
-    "test": "jest --watch-all --runInBand"
+    "test": "jest --watch-all --runInBand",
+    "coverage": "jest --coverage --runInBand"
   },
   "author": "",
   "license": "ISC",

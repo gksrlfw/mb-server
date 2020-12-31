@@ -1,7 +1,7 @@
 /*
     테이블 생성 및 삭제
 */
-
+const path = require('path');
 const db = require('./db');
 const { encodePassword } = require('../utils/bcrypt');
 
@@ -28,6 +28,7 @@ CREATE TABLE PROFILES (
     PID INT(10) NOT NULL AUTO_INCREMENT,
     ABOUT_ME VARCHAR(200),
     CAREER VARCHAR(1000),
+    IAMGE_PATH VARCHAR(200),
     P_UID INT NOT NULL,
     FOREIGN KEY (P_UID) REFERENCES USERS(UID),
     PRIMARY KEY (PID)
@@ -98,9 +99,15 @@ exports.createAll = async () => {
         await db.promise().execute(CREATE_LESSONS);
         await db.promise().execute(CREATE_COMMENTS);
 
+        /* 회원가입 데이터 입력 */
         const hash = await encodePassword('gksrlfw123');
-        const SQL = `INSERT INTO USERS(NICK, PASSWORD, EMAIL) VALUES('한길이', ?, 'gksrlfw@naver');`;
-        await db.promise().execute(SQL, [hash]);
+        const SQL1 = `INSERT INTO USERS(NICK, PASSWORD, EMAIL) VALUES('한길이', ?, 'gksrlfw@naver');`;
+        await db.promise().execute(SQL1, [hash]);
+
+        /* 회원가입 데이터 입력 */
+        const imagePath = path.join(__dirname, '..', 'public', 'images', 'testOutputImage');
+        const SQL2 = `INSERT INTO PROFILES(ABOUT_ME, CAREER, IMAGE_PATH) VALUES('제 이름은 서한길입니다', "['신입 준비 중', '여고유치원 졸업']", '?');`;
+        await db.promise().execute(SQL2, [imagePath]);
     }
     catch(err) {
         console.error(err);
