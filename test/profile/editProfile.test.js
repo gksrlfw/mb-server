@@ -33,15 +33,15 @@ describe('UPDATE /user/profile/edit/:uid', () => {
     });
 
     /* 문자열 초과 에러 테스트 추가하자 */
-    // const aboutMe = 'a'.repeat(1005);
-    // test('editprofile: exceed string', async (done) => {
-    //     agent
-    //     .put('/user/profile/edit/1')
-    //     .send({
-    //         "aboutMe": aboutMe
-    //     })
-    //     .expect(403, done)
-    // });
+    const aboutMe = 'a'.repeat(1005);
+    test('editprofile: exceed string', async (done) => {
+        agent
+        .put('/user/profile/edit/1')
+        .send({
+            "aboutMe": aboutMe
+        })
+        .expect(403, done)
+    });
 
     test('editprofile: correct editprofile', async (done) => {
         agent
@@ -50,7 +50,7 @@ describe('UPDATE /user/profile/edit/:uid', () => {
             "aboutMe": '피아노 13년 공부했습니다',
             "career": "['백수', '피아노 학원 13년']"
         })
-        // .expect(200)
+        .expect(200)
         .then(res => {
             const { email, nick, aboutMe, career, imagePath } = res.body;
             expect(nick).toEqual('한길이');

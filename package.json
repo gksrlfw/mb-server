@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app",
     "coverage": "jest --coverage",
-    "test": "jest --watch-all --silent --runInBand"
+    "test": "jest --watch-all  --silent --runInBand"
   },
   "author": "",
   "license": "ISC",
