@@ -56,7 +56,7 @@ class UserService {
             console.error(err);
         }
     }
-
+    
     async editUserPassword(uid, password) {
         try {
             console.log('editUserPassword: service');

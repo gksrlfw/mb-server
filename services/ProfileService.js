@@ -60,23 +60,6 @@ class ProfileService {
         }
     }
 
-    async editUserPassword(uid, password) {
-        try {
-            console.log('service: editUserPassword');
-            let SQL = `SELECT * FROM PROFILES WHERE P_UID=?`;
-            let [results, fields] = await this.db.promise().execute(SQL, [uid]);
-            if(!results.length) return { status: 403, message: '해당하는 유저가 존재하지 않습니다' };
-
-            const hash = encodePassword(password);
-            SQL = `UPDATE USERS SET PASSWORD=? WHERE UID=?`;
-            await this.db.promise().execute(SQL, [aboutMe, career, uid]);
-            return { status: 200, message: 'succeed' };
-        }
-        catch(err) {
-            console.error(err);
-        }
-    }
-
     async getMyPage(uid) {
         try {
             console.log('service: getMyPage');
