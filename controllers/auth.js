@@ -1,7 +1,7 @@
 const db = require('../config/db');
 const passport = require('passport');
 
-const UserService = require('../services/UserService');
+const userServiceInstance = require('../services/UserService');
 const { emailValidation, loginValidation, joinValidation } = require('../utils/validation');
 const { createAccessToken } = require('../utils/jsonwebtoken');
 
@@ -12,7 +12,6 @@ exports.authEmail = async (req, res, next) => {
         const error = await emailValidation({ email });
         if(typeof error !== 'undefined') return res.status(403).send(error);
 
-        const userServiceInstance = new UserService(db);
         const { status, message } = await userServiceInstance.authEmail(email);
         res.status(status).send({ message });
     }
@@ -28,7 +27,6 @@ exports.join = async (req, res, next) => {
         const error = await joinValidation({ email, password, nickname });
         if(typeof error !== 'undefined') return res.status(403).send(error);
 
-        const userServiceInstance = new UserService(db);
         const { status, message } = await userServiceInstance.join(email, password, nickname);
         res.status(status).send({ message });
     }

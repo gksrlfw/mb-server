@@ -10,8 +10,13 @@ beforeAll(async () => {
 describe('GET /user/getprofile', () => {
     test('getprofile: not login user', async (done) => {
         request(app)
-        .post('/user/getprofile/:uid')
-        .expect(403, done);
+        .get('/user/profile/1')
+        .expect(403)
+        .then(res => {
+            console.log('찍어보기!: ', res.body.message);
+            done();
+        })
+        
     });
 
     const agent = request.agent(app);
@@ -27,24 +32,22 @@ describe('GET /user/getprofile', () => {
 
     test('getprofile: not exist uid', async (done) => {
         request(app)
-        .post('/user/profile/:uid')
-        .query({ uid: '0' })
+        .get('/user/profile/0')
         .expect(403, done)
     });
 
     test('getprofile: correct getprofile', async (done) => {
         agent
-        .post('/user/profile/:uid')
-        .query({ uid: '1' })
+        .get('/user/profile/1')
         .expect(200)
-        .expect('Content-Type', /json/)
+        // .expect('Content-Type', /json/)
         .then(res => {
             const { email, nick, aboutMe, career, imagePath } = res.body;
             expect(nick).toEqual('한길이');
             expect(email).toEqual('gksrlfw@naver');
             expect(aboutMe).toEqual('제 이름은 서한길입니다');
             expect(career).toEqual("['신입 준비 중', '여고유치원 졸업']");
-            expect(imagePath).toEqual('C:\\Users\\gksrl\\Desktop\\mohobby-server\\server\\public\\images\\test.jpg');
+            expect(imagePath).toEqual('C:\\Users\\gksrl\\Desktop\\mohobby-server\\server\\public\\images\\testOutputImage');
             done();
         })
         .catch(err => {

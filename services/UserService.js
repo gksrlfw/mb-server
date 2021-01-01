@@ -1,5 +1,6 @@
 const { encodePassword, decodePassword } = require('../utils/bcrypt');
 const { sendAuthEmail } = require('../utils/nodemailer');
+const db = require('../config/db');
 
 class UserService {
     db;
@@ -22,7 +23,7 @@ class UserService {
             console.error(err);
         }
     }
-    /* authMail을 안했으면 이게 안되게 해줘야하는데... 디비에서 검사하는거 이외에 방법을 모르겠다.*/
+    /* authMail을 안했으면 이게 안되게 해줘야하는데... 디비에서 검사하는거 이외에 방법을 모르겠다. 프론트에서 해결해달라고 하자.. */
     async join(email, password, nick) {
         try {
             console.log('join: service', email, password, nick);
@@ -60,4 +61,5 @@ class UserService {
     }
 }
 
-module.exports = UserService;
+const userServiceInstance = new UserService(db);
+module.exports = userServiceInstance;

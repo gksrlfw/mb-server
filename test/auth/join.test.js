@@ -23,8 +23,8 @@ describe('POST /auth/join', () => {
         request(app)
         .post('/auth/join')
         .send({
-            "email": "tprlfdl@naver",
-            "password": "tprlfw123",
+            "email": "enrlfw@naver",
+            "password": "enrlfw123",
             "nickname": "두길이"
         })
         .expect(200)

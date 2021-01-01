@@ -3,7 +3,7 @@
 const passport = require('passport');
 const db = require('../config/db');
 const LocalStrategy = require('passport-local').Strategy;
-const UserService = require('../services/UserService');
+const userServiceInstance = require('../services/UserService');
 
 module.exports = () => {
     passport.use(new LocalStrategy({
@@ -12,7 +12,6 @@ module.exports = () => {
     }, async (email, password, done) => {
         try {
             console.log('passportLocal');
-            const userServiceInstance = new UserService(db);
             const { status, message } = await userServiceInstance.login(email, password);
             console.log(status, message);
             if(status === 404) done(null, false, { status, message });

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { test, testDB, testpost, testpost2 } = require('../controllers/exam');
 const { authEmail, join, login, logout, relogin } = require('../controllers/auth');
-const { getUserProfile, editUserPassword, editUserProfile, getMyPage } = require('../controllers/user');
+const { getUserProfile, editUserPassword, editUserProfile, getMyPage } = require('../controllers/profile');
 // const { getMain } = require('../controllers/main');
 
 const { isLogin, isNotLogin } = require('../utils/authMiddleware');
@@ -28,8 +28,8 @@ router.get('/auth/refresh', isLogin, verifyToken, relogin);
 
 /* User */
 router.get('/user/profile/:uid', isLogin, getUserProfile);
-router.update('/user/profile/edit/:uid', isLogin, editUserProfile);
-router.update('/user/profile/editpw/:uid', isLogin, editUserPassword);
+router.put('/user/profile/edit/:uid', isLogin, editUserProfile);
+router.put('/user/profile/editpw/:uid', isLogin, editUserPassword);
 router.get('/user/mypage/:uid', isLogin, getMyPage);
 
 /* Main */
