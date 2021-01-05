@@ -4,6 +4,7 @@
 const path = require('path');
 const db = require('./db');
 const { encodePassword } = require('../utils/bcrypt');
+const { promise } = require('./db');
 
 const DELETE_COMMENTS = `DROP TABLE COMMENTS;`;
 const DELETE_LESSONS = `DROP TABLE LESSONS;`;
@@ -50,6 +51,9 @@ CREATE TABLE LESSONS (
     TITLE VARCHAR(100) NOT NULL,
     CONTENT VARCHAR(1000) NOT NULL,
     PRICE VARCHAR(10) DEFAULT '0',
+    IMAGE_PATH VARCHAR(200),
+    VIDEO_PATH VARCHAR(200),
+    VIEWS INT(10) NOT NULL DEFAULT 1,
     COMPLETED CHAR(1) NOT NULL DEFAULT 'N',
     DELETE_AT CHAR(1) NOT NULL DEFAULT 'N',
     CDAT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -110,6 +114,7 @@ exports.deleteAll = async () => {
 */
 exports.createAll = async () => {
     try {
+        // promise.all();
         await db.promise().execute(CREATE_CATEGORY);
         await db.promise().execute(CREATE_USERS);
         await db.promise().execute(CREATE_PROFILES);

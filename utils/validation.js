@@ -75,4 +75,22 @@ const passwordValidation = async (data) => {
     }
 }
 
-module.exports = { emailValidation, loginValidation, joinValidation, profileValidation, passwordValidation };
+const lessonFilterValidation = async (data) => {
+    try {
+        const schema = Joi.object({
+            category: Joi.string().min(8).max(20).required(),
+            price: Joi.string().min(8).max(20).required(),
+            location: Joi.string().min(8).max(20).required()
+        });
+        await schema.validateAsync(data);
+    }
+    catch(err) {
+        console.error(err);
+        err.message = '입력 문자 형식을 지켜주세요!';
+        return err.message;
+    }
+}
+
+
+
+module.exports = { emailValidation, loginValidation, joinValidation, profileValidation, passwordValidation, lessonFilterValidation };

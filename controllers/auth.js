@@ -55,11 +55,18 @@ exports.login = async (req, res, next) => {
         return req.login(user, (pwdError) => {
             if(pwdError) return res.send(pwdError);
             const accessToken = createAccessToken(user.UID);
-            return res.status(info.status).header('auth_token', accessToken).send({
-               nick: user.NICK,
-               email: user.EMAIL,
-               id: user.UID 
+            // return res.status(info.status).header('auth_token', accessToken).send({
+            //    nick: user.NICK,
+            //    email: user.EMAIL,
+            //    id: user.UID 
+            // });
+            return res.status(info.status).send({
+                token: accessToken,
+                nick: user.NICK,
+                email: user.EMAIL,
+                id: user.UID 
             });
+            
         });
     })(req, res, next);
 };
@@ -78,9 +85,9 @@ exports.logout = async (req, res, next) => {
 
 exports.relogin = async (req, res, next) => {
     try {
-        console.log('logout: relogin');
+        console.log('logout: relogin', req.isAuthenticated());
         if(req.isAuthenticated()) res.status(200).send(req.user);
-        else res.status(500).send('로그인이 풀린상태입니다. 다시 로그인해주세요!');
+        else res.status(500).send('서버가 재실행되어 다시 로그인해야합니다!');
     }
     catch(err) {
         next(err);
