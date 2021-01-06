@@ -39,6 +39,8 @@ describe('POST /lesson/write', () => {
                 price: '9000'
             },
             content: '주 1회 PT',
+            imagePath: '',
+            videoPath: '',
             isProfile: true
         })
         .expect(200)

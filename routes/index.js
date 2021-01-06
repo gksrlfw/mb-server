@@ -4,7 +4,7 @@ const { test, testDB, testpost, testpost2 } = require('../controllers/exam');
 const { authEmail, join, login, logout, relogin } = require('../controllers/auth');
 const { getUserProfile, editUserPassword, editUserProfile, getMyPage } = require('../controllers/profile');
 // const { getMain } = require('../controllers/main');
-const { getLessons } = require('../controllers/lesson');
+const { getLessons, writeLesson } = require('../controllers/lesson');
 
 const { isLogin, isNotLogin } = require('../utils/authMiddleware');
 const { verifyToken } = require('../utils/jsonwebtoken');
@@ -38,5 +38,6 @@ router.get('/user/mypage/:uid', isLogin, getMyPage);                   //
 
 /* Lesson */
 router.get('/lesson', getLessons);
+router.post('/lesson/write', isLogin, writeLesson);
 
 module.exports = router;

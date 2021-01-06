@@ -91,6 +91,30 @@ const lessonFilterValidation = async (data) => {
     }
 }
 
+const writeLessonValidation = async (data) => {
+    try {
+        // required가 맞는가??...
+        const schema = Joi.object({
+            nickname: Joi.string().min(2).max(20).required(),
+            detail: Joi.object({
+                price: Joi.string().required(),
+                category: Joi.string().required(),
+                location: Joi.string().required(),
+            }).with('price', 'category', 'location'),
+            content: Joi.string().min(1).max(1000).required(),
+            imagePath: Joi.string().max(200).required(),
+            videoPath: Joi.string().max(200).required(),
+            isProfile: Joi.boolean().required(),
 
+        });
+        await schema.validateAsync(data);
+    }
+    catch(err) {
+        console.error(err);
+        err.message = '입력 문자 형식을 지켜주세요!';
+        return err.message;
+    }
+}
 
-module.exports = { emailValidation, loginValidation, joinValidation, profileValidation, passwordValidation, lessonFilterValidation };
+module.exports = { emailValidation, loginValidation, joinValidation, profileValidation, passwordValidation, lessonFilterValidation,
+                    writeLessonValidation };
