@@ -13,7 +13,7 @@ const { uploadProfileImageM, uploadLessonVideoM, uploadLessonImageM } = require(
 
 /* Test */
 router.get('/', (req, res) => {
-    res.send({ message: 'hell1asdasdasd2zxcvzxcv3123o' });
+    res.send({ message: 'asdasd' });
 });
 router.get('/test', test);
 router.get('/test/db', testDB);
