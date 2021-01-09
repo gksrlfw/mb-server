@@ -1,0 +1,14 @@
+# 노드기반
+FROM node:14.15.3
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "dev" ]
+
+COPY . .
