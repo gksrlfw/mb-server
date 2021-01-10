@@ -36,6 +36,6 @@ else {
     }
 }
 
-const db = mysql.createConnection(option_local);
+const db = mysql.createConnection(option);
 
 module.exports = db;

@@ -9,10 +9,10 @@ services:
 #   - docker build -t gksrlfw/mb-server:0.0.3 
 
 after_success:
-  - docker build -t gksrlfw/mb-server ./server
-  - docker build -t gksrlfw/mb-nignx ./nginx
+  - docker build -t gksrlfw/mb-server-server ./server
+  - docker build -t gksrlfw/mb-server-nginx ./nginx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
 
-  - docker push gksrlfw/mb-server
-  - docker push gksrlfw/mb-nginx
+  - docker push gksrlfw/mb-server-server
+  - docker push gksrlfw/mb-server-nginx
