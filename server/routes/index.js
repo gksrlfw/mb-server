@@ -24,7 +24,7 @@ router.get('/test/post2', testpost2);
 router.post('/auth/join/ecode', isNotLogin, authEmail);
 router.post('/auth/join', isNotLogin, join);
 router.post('/auth/login', isNotLogin, login);
-router.get('/auth/logout', isLogin, logout);       //
+router.get('/auth/logout', verifyToken, isLogin, logout);       //
 router.get('/auth/relogin', verifyToken, isLogin, relogin);     //
 
 /* User */
@@ -41,6 +41,6 @@ router.get('/user/mypage/:uid', isLogin, getMyPage);                   //
 router.get('/lesson', getLessons);
 router.post('/lesson/write', isLogin, writeLesson);
 router.post('/lesson/write/image', isLogin, uploadLessonImageM.single('image'), uploadLessonImage);   // multer
-router.post('/lesson/write/video', uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
+router.post('/lesson/write/video', isLogin, uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
 
 module.exports = router;

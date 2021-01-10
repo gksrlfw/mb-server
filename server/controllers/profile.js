@@ -61,7 +61,8 @@ exports.getMyPage = async (req, res, next) => {
 exports.uploadProfileImage = async (req, res, next) => {
     try {
         console.log(req.file);  // 업로드 정보를 가짐
-        res.send({ message: req.file });
+        // res.send({ message: req.file });
+        res.json({ url: `/image/profile/${req.file.filename}` });
     }
     catch(err) {
         next(err);

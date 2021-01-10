@@ -9,13 +9,14 @@ if(process.env.NODE_ENV === 'production') {
         user: process.env.PROD_USERNAME,
         password: process.env.PROD_PASSWORD,
         database: process.env.PROD_NAME,
+        port: process.env.PROD_PORT,
         connectionLimit: 5,
         dateStrings: 'date'
     }
 }
 else {
     // 로컬일때, 192.~~ 일때로 나눈다
-    option = {
+    option_docker = {
         host: process.env.DEV_HOST,
         user: process.env.DEV_USERNAME,
         password: process.env.DEV_PASSWORD,
@@ -25,7 +26,7 @@ else {
         dateStrings: 'date'
     }
 
-    option_local = {
+    option = {
         host: process.env.DEV_LOCAL_HOST,
         user: process.env.DEV_LOCAL_USERNAME,
         password: process.env.DEV_LOCAL_PASSWORD,

@@ -61,6 +61,10 @@ else app.use(morgan('dev'));
 app.enable('trust proxy');
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/image/lesson', express.static(path.join(__dirname, 'public/images/lessons'))); // /img에서 요청하면 public/images/lessons 폴더에 있는 파일을 준다
+app.use('/image/profile', express.static(path.join(__dirname, 'public/images/profiles')));
+app.use('/video/lesson', express.static(path.join(__dirname, 'public/videos/lessons')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -69,7 +73,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use('/', indexRouter)
+app.use('/api', indexRouter)
 
 app.use((req, res, next) => {
   res.status(404).send(`해당 페이지가 존재하지 않습니다!!!!`);

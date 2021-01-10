@@ -40,7 +40,9 @@ exports.writeLesson = async (req, res, next) => {
 exports.uploadLessonImage = async (req, res, next) => {
     try {
         console.log(req.file);  // 업로드 정보를 가짐
-        res.send({ message: req.file });    
+        // res.send({ message: req.file });    
+        // express.static을 통해 실제 파일은 /public/images/lessons에 있지만 요청은 img/lesson으로 한다
+        res.json({ url: `/image/lesson/${req.file.filename}` }); 
     }
     catch(err) {
         next(err);
@@ -50,7 +52,8 @@ exports.uploadLessonImage = async (req, res, next) => {
 exports.uploadLessonVideo = async (req, res, next) => {
     try {
         console.log(req.file);  
-        res.send({ message: req.file });
+        // res.send({ message: req.file });
+        res.json({ url: `/video/lesson/${req.file.filename}` });
     }
     catch(err) {
         next(err);
