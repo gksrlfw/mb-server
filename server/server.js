@@ -26,19 +26,6 @@ db.connect((err) => {
   console.log('mysql connected...');
 });
 
-// (async () => {
-//   try {
-//     const SQL = `SELECT * FROM USERS`;
-//     const [results, fields] = await db.promise().execute(SQL);
-//     if(results.length) return;
-//     await deleteAll();
-//   }
-//   catch(err) {
-//     console.error(err);
-//     await createAll();
-//   }
-// })();
-
 const sessionOption = {
   resave: false,
   saveUninitialized: false,
@@ -55,6 +42,19 @@ if(process.env.NODE_ENV === 'production') {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(hpp());
   // sessionOption.cookie.secure = true; // HTTPS 적용시 주석 풀기
+
+  (async () => {
+    try {
+      const SQL = `SELECT * FROM USERS`;
+      const [results, fields] = await db.promise().execute(SQL);
+      if(results.length) return;
+      await deleteAll();
+    }
+    catch(err) {
+      console.error(err);
+      await createAll();
+    }
+  })();
 }
 else app.use(morgan('dev'));
 
