@@ -63,8 +63,19 @@ class LessonService {
                 SQL = `SELECT * FROM LESSONS WHERE L_CAID = (SELECT CAID FROM CATEGORY WHERE TITLE=?) AND L_LOCID = (SELECT LOCID FROM LOCATIONS WHERE LOC=? ) AND PRICE >= ? AND PRICE <= ?;`;
                 [results, fields] = await this.db.promise().execute(SQL, [category, location, price1, price2]);
             }   
-            
-            return { status: 200, message: results[0] };
+
+            // 위에서 조인으로 만들기...
+            let answer = results[0];
+            const { L_CAID, L_LOCID } = results[0];
+            SQL = `SELECT * FROM LOCATIONS WHERE LOCID=?`;
+            [results, fields] = await this.db.promise().execute(SQL, [L_LOCID]);
+            answer.location = results[0].LOC;
+
+            SQL = `SELECT * FROM CATEGORY WHERE CAID=?`;
+            [results, fields] = await this.db.promise().execute(SQL, [L_CAID]);
+            answer.category = results[0].TITLE;
+
+            return { status: 200, message: answer };
         }
         catch(err) {
             console.error(err);
