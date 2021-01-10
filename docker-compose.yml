@@ -19,13 +19,12 @@ services:
       - /app/node_modules
       - ./server/:/app
     environment:                    
-      - CHOKIDAR_USEPOLLING=true
       PROD_HOST= mysql
       PROD_NAME= TEST
       PROD_USERNAME= admin 
       PROD_PASSWORD= password
       PROD_PORT= 3306
-
+      # - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"
 
