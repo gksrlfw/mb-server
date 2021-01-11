@@ -19,34 +19,34 @@ services:
       - /app/node_modules
       - ./server/:/app
     environment:                    
-      PROD_HOST= mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com
-      PROD_NAME= TEST
-      PROD_USERNAME= admin 
-      PROD_PASSWORD= password
-      PROD_PORT= 3306
+      # PROD_HOST= mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com
+      # PROD_NAME= TEST
+      # PROD_USERNAME= admin 
+      # PROD_PASSWORD= password
+      # PROD_PORT= 3306
       
-      PORT= 3000
+      # PORT= 3000
 
-      COOKIE_SECRET= cookiesecret
+      # COOKIE_SECRET= cookiesecret
 
-      DEV_HOST= 192.168.99.100
-      DEV_USERNAME= root
-      DEV_NAME= mohobby
-      DEV_PASSWORD= eksrja784$
+      # DEV_HOST= 192.168.99.100
+      # DEV_USERNAME= root
+      # DEV_NAME= mohobby
+      # DEV_PASSWORD= eksrja784$
 
-      DEV_LOCAL_HOST= localhost
-      DEV_LOCAL_USERNAME= root
-      DEV_LOCAL_NAME= mohobby
-      DEV_LOCAL_PASSWORD= eksrja784$
+      # DEV_LOCAL_HOST= localhost
+      # DEV_LOCAL_USERNAME= root
+      # DEV_LOCAL_NAME= mohobby
+      # DEV_LOCAL_PASSWORD= eksrja784$
 
-      MAIL_EMAIL= gksrlfw@naver.com
-      MAIL_PASSWORD= gksrlf784
+      # MAIL_EMAIL= gksrlfw@naver.com
+      # MAIL_PASSWORD= gksrlf784
 
-      JWT_SECRET= jwtsecret
+      # JWT_SECRET= jwtsecret
 
 
       # =================================
-      # - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"
 

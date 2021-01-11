@@ -8,7 +8,7 @@ const cors = require('cors');
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
-
+const { checkDir } = require('./utils/fs');
 const db = require('./config/db');
 const passportConfig = require('./utils/passport');
 const { createAll, deleteAll } = require('./config/table');
@@ -16,8 +16,13 @@ const { createAll, deleteAll } = require('./config/table');
 dotenv.config();
 passportConfig();
 
-console.log('dotenv: ', process.env.PORT, process.env.PROD_HOST, process.env.PROD_NAME, process.env.JWT_SECRET, process.env.MAIL_EMAIL, process.env.COOKIE_SECRET);
-
+console.log('dotenv:', process.env.PORT, process.env.PROD_HOST, process.env.PROD_NAME, process.env.JWT_SECRET, process.env.MAIL_EMAIL, process.env.COOKIE_SECRET);
+checkDir('/public/images');
+checkDir('/public/videos');
+checkDir('/public/images/profiles');
+checkDir('/public/images/lessons');
+checkDir('/public/videos/lessons');
+checkDir('/public/videos/m3u8');
 
 const indexRouter = require('./routes');
 
