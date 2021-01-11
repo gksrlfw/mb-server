@@ -52,7 +52,9 @@ exports.login = async (req, res, next) => {
             return res.status(info.status).send(info.message);    
         }
         if(!user) return res.status(info.status).send(info.message);
+        console.log("--000000", info);
         return req.login(user, (pwdError) => {
+            console.log("1111111", accessToken, user);
             if(pwdError) return res.send(pwdError);
             const accessToken = createAccessToken(user.UID);
             // return res.status(info.status).header('auth_token', accessToken).send({
@@ -60,6 +62,7 @@ exports.login = async (req, res, next) => {
             //    email: user.EMAIL,
             //    id: user.UID 
             // });
+            console.log("222222", accessToken, user);
             return res.status(info.status).send({
                 token: accessToken,
                 nick: user.NICK,
