@@ -18,15 +18,31 @@ after_success:
   - docker push gksrlfw/mb-server-nginx
 
 
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-2"
+#   app: "mb-app"
+#   env: "MbApp-env"
+#   bucket_name: elasticbeanstalk-us-east-2-407538465392
+#   bucket_path: "mb-app"
+#   on:
+#     branch: master
+
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY
+
 deploy:
-  provider: elasticbeanstalk
+  provider: ec2
   region: "us-east-2"
-  app: "mb-app"
+  app: "simple-ec2-docker"
   env: "MbApp-env"
   bucket_name: elasticbeanstalk-us-east-2-407538465392
   bucket_path: "mb-app"
   on:
     branch: master
+dependencies:
+  pre:
+    - pip install awsebcl
 
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
