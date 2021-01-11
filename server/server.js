@@ -69,7 +69,7 @@ else app.use(morgan('dev'));
 app.enable('trust proxy');
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/image/lesson', express.static(path.join(__dirname, 'public/images/lessons'))); // /img에서 요청하면 public/images/lessons 폴더에 있는 파일을 준다
+app.use('/image/lesson', express.static(path.join(__dirname, '/utils'))); // /img에서 요청하면 public/images/lessons 폴더에 있는 파일을 준다
 app.use('/image/profile', express.static(path.join(__dirname, 'public/images/profiles')));
 app.use('/video/lesson', express.static(path.join(__dirname, 'public/videos/lessons')));
 
