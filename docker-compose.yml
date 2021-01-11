@@ -46,14 +46,14 @@ services:
 
 
 
-      # - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"
 
   # mysql:
   #   build: ./mysql
   #   restart: unless-stopped
-  #   command: --innodb_use_native_aio=0  # 이상한 에러뜸;; 이거 써야된다
+  #   command: --innodb_use_native_aio=0  
   #   ports:
   #     - "3306:3306"
   #   volumes:

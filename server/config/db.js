@@ -38,6 +38,6 @@ option_docker = {
 }
 
 
-const db = mysql.createConnection(option_docker);
+const db = mysql.createConnection(option);
 
 module.exports = db;
