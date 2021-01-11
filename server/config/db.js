@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 require('dotenv').config();
 
 // 배포용
-let option = {}, option_local = {};
+let option = {}, option_docker = {};
 if(process.env.NODE_ENV === 'production') {
     option = {
         host: process.env.PROD_HOST,
@@ -15,17 +15,6 @@ if(process.env.NODE_ENV === 'production') {
     }
 }
 else {
-    // 로컬일때, 192.~~ 일때로 나눈다
-    option_docker = {
-        host: process.env.DEV_HOST,
-        user: process.env.DEV_USERNAME,
-        password: process.env.DEV_PASSWORD,
-        database: process.env.DEV_NAME,
-        port: 3306,
-        connectionLimit: 5,
-        dateStrings: 'date'
-    }
-
     option = {
         host: process.env.DEV_LOCAL_HOST,
         user: process.env.DEV_LOCAL_USERNAME,
@@ -37,6 +26,18 @@ else {
     }
 }
 
-const db = mysql.createConnection(option);
+// 로컬일때, 192.~~ 일때로 나눈다
+option_docker = {
+    host: process.env.DEV_HOST,
+    user: process.env.DEV_USERNAME,
+    password: process.env.DEV_PASSWORD,
+    database: process.env.DEV_NAME,
+    port: 3306,
+    connectionLimit: 5,
+    dateStrings: 'date'
+}
+
+
+const db = mysql.createConnection(option_docker);
 
 module.exports = db;

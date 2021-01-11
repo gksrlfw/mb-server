@@ -2,11 +2,18 @@ const fs = require('fs');
 const path = require('path');
 
 const checkDir = str => {
-    if (!fs.existsSync(path.join(__dirname, '..', str))) {
-        console.log('The path not exists.');
-        fs.mkdirSync(path.join(__dirname, '..', str));
+    console.log('fs: checkDir...');
+    try {
+        if (!fs.existsSync(path.join(__dirname, '..', str))) {
+            console.log('The path not exists.');
+            fs.mkdirSync(path.join(__dirname, '..', str));
+        }
+        else console.log('The path exists.');    
     }
-    else console.log('The path exists.');
+    catch(err) {
+        console.error(err);
+    }
+    
 }
 
 const deleteFile = (dir, title, ext) => {

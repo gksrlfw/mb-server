@@ -19,24 +19,24 @@ services:
       - /app/node_modules
       - ./server/:/app
     environment:                    
-      PROD_HOST= mysql
-      PROD_NAME= TEST
-      PROD_USERNAME= admin 
-      PROD_PASSWORD= password
-      PROD_PORT= 3306
-      # - CHOKIDAR_USEPOLLING=true
+      # PROD_HOST= mysql
+      # PROD_NAME= TEST
+      # PROD_USERNAME= admin 
+      # PROD_PASSWORD= password
+      # PROD_PORT= 3306
+      - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"
 
-  # mysql:
-  #   build: ./mysql
-  #   restart: unless-stopped
-  #   command: --innodb_use_native_aio=0  # 이상한 에러뜸;; 이거 써야된다
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - ./mysql/mysql_data:/var/lib/mysql
-  #     - ./mysql/sqls:/docker-entrypoint-initdb.d/
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: eksrja784$$
-  #     MYSQL_DATABASE: root
+  mysql:
+    build: ./mysql
+    restart: unless-stopped
+    command: --innodb_use_native_aio=0  # 이상한 에러뜸;; 이거 써야된다
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/mysql_data:/var/lib/mysql
+      - ./mysql/sqls:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: eksrja784$$
+      MYSQL_DATABASE: root
