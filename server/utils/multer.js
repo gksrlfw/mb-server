@@ -7,7 +7,7 @@ const { checkDir } = require('./fs');
 
 // https://www.zerocho.com/category/NodeJS/post/5950a6c4f7934c001894ea83
 
-
+console.log(path.join(__dirname, '..', 'public/images/profiles/'));
 const uploadProfileImageM = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
@@ -24,7 +24,7 @@ const uploadProfileImageM = multer({
 const uploadLessonImageM = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
-            done(null, 'public/images/lessons/');
+            done(null, path.join(__dirname, '..', 'public/images/lessons/'));
         },
         filename(req, file, done) {
             const ext = path.extname(file.originalname); 
