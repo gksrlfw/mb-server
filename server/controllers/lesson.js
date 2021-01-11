@@ -27,10 +27,11 @@ exports.writeLesson = async (req, res, next) => {
         const error = await writeLessonValidation({ aboutMe, career });
         if(typeof error !== 'undefined') return res.status(403).send(error);
 
-        const { status, message } = await lessonServiceInstance.getLessons(nickname, detail, content, isProfile, imageInfo, videoInfo, isProfile);
-        res.status(status).send(message);
+        // const { status, message } = await lessonServiceInstance.getLessons(nickname, detail, content, isProfile, imageInfo, videoInfo, isProfile);
+        // res.status(status).send(message);
 
-        await ffmpegFunctionPromise(videoInfo); // ffmpeg 실행
+        res.status(200).send({ nickname, detail, content, imageInfo, videoInfo, isProfile });
+        // await ffmpegFunctionPromise(videoInfo); // ffmpeg 실행
     }
     catch(err) {
         next(err);
