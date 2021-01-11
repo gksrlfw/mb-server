@@ -39,8 +39,8 @@ router.get('/user/mypage/:uid', isLogin, getMyPage);                   //
 
 /* Lesson */
 router.get('/lesson', getLessons);
-router.post('/lesson/write', isLogin, writeLesson);
-router.post('/lesson/write/image', uploadLessonImageM.single('image'), uploadLessonImage);   // multer
+router.post('/lesson/write', verifyToken, isLogin, writeLesson);
+router.post('/lesson/write/image', isLogin, uploadLessonImageM.single('image'), uploadLessonImage);   // multer
 router.post('/lesson/write/video', isLogin, uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
 
 module.exports = router;
