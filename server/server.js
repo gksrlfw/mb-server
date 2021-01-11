@@ -16,6 +16,9 @@ const { createAll, deleteAll } = require('./config/table');
 dotenv.config();
 passportConfig();
 
+console.log('dotenv: ', process.env.PORT, process.env.PROD_HOST, process.env.PROD_NAME, process.env.JWT_SECRET, process.env.MAIL_EMAIL, process.env.COOKIE_SECRET);
+
+
 const indexRouter = require('./routes');
 
 const app = express();

@@ -24,7 +24,7 @@ services:
       PROD_USERNAME= admin 
       PROD_PASSWORD= password
       PROD_PORT= 3306
-      ##################################################
+      
       PORT= 3000
 
       COOKIE_SECRET= cookiesecret
@@ -45,7 +45,7 @@ services:
       JWT_SECRET= jwtsecret
 
 
-
+      # =================================
       # - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"
