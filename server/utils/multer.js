@@ -24,7 +24,7 @@ const uploadProfileImageM = multer({
 const uploadLessonImageM = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
-            done(null, __dirname);
+            done(null, path.join(__dirname, '..', 'public/images/lessons/'));
         },
         filename(req, file, done) {
             const ext = path.extname(file.originalname); 

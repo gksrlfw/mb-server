@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const path = require('path');
@@ -17,12 +18,16 @@ dotenv.config();
 passportConfig();
 
 console.log('dotenv:', process.env.PORT, process.env.PROD_HOST, process.env.PROD_NAME, process.env.JWT_SECRET, process.env.MAIL_EMAIL, process.env.COOKIE_SECRET);
-// checkDir('/public/images');
-// checkDir('/public/videos');
-// checkDir('/public/images/profiles');
-// checkDir('/public/images/lessons');
-// checkDir('/public/videos/lessons');
-// checkDir('/public/videos/m3u8');
+console.log('__dirname:', __dirname, fs.existsSync(path.join(__dirname, 'public')));
+checkDir('/public');
+checkDir('/public/images');
+checkDir('/public/videos');
+checkDir('/public/images/profiles');
+checkDir('/public/images/lessons');
+checkDir('/public/videos/lessons');
+checkDir('/public/videos/m3u8');
+
+console.log('__dirname:', __dirname, fs.existsSync(path.join(__dirname, 'public')), fs.existsSync(path.join(__dirname, 'public', 'images', 'lessons')));
 
 const indexRouter = require('./routes');
 
@@ -69,7 +74,7 @@ else app.use(morgan('dev'));
 app.enable('trust proxy');
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/image/lesson', express.static(path.join(__dirname, '/utils'))); // /img에서 요청하면 public/images/lessons 폴더에 있는 파일을 준다
+app.use('/image/lesson', express.static(path.join(__dirname, 'public/images/lessons'))); // /img에서 요청하면 public/images/lessons 폴더에 있는 파일을 준다
 app.use('/image/profile', express.static(path.join(__dirname, 'public/images/profiles')));
 app.use('/video/lesson', express.static(path.join(__dirname, 'public/videos/lessons')));
 
