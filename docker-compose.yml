@@ -19,7 +19,7 @@ services:
       - /app/node_modules
       - ./server/:/app
     environment:                    
-      PROD_HOST= mysql
+      PROD_HOST= mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com
       PROD_NAME= TEST
       PROD_USERNAME= admin 
       PROD_PASSWORD= password
@@ -46,7 +46,7 @@ services:
 
 
 
-      - CHOKIDAR_USEPOLLING=true
+      # - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"
 
