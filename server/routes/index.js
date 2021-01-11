@@ -24,7 +24,7 @@ router.get('/test/post2', testpost2);
 router.post('/auth/join/ecode', isNotLogin, authEmail);
 router.post('/auth/join', isNotLogin, join);
 router.post('/auth/login', isNotLogin, login);
-router.get('/auth/logout', verifyToken, isLogin, logout);       //
+router.get('/auth/logout', isLogin, logout);       //
 router.get('/auth/relogin', verifyToken, isLogin, relogin);     //
 
 /* User */
