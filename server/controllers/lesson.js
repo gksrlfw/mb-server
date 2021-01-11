@@ -22,15 +22,16 @@ exports.getLessons = async (req, res, next) => {
 exports.writeLesson = async (req, res, next) => {
     try {
         const { nickname, detail, content, imageInfo, videoInfo, isProfile } = req.body;
-        console.log('controllers: writeLesson', fileInfo);
+        console.log('controllers: writeLesson');
 
-        const error = await writeLessonValidation({ aboutMe, career });
-        if(typeof error !== 'undefined') return res.status(403).send(error);
+        // const error = await writeLessonValidation({ aboutMe, career });
+        // if(typeof error !== 'undefined') return res.status(403).send(error);
 
         // const { status, message } = await lessonServiceInstance.getLessons(nickname, detail, content, isProfile, imageInfo, videoInfo, isProfile);
         // res.status(status).send(message);
 
-        res.status(200).send({ nickname, detail, content, imageInfo, videoInfo, isProfile });
+        res.status(200).send('hello');
+        // res.status(200).send({ nickname, detail, content, imageInfo, videoInfo, isProfile });
         // await ffmpegFunctionPromise(videoInfo); // ffmpeg 실행
     }
     catch(err) {
