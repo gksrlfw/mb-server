@@ -13,7 +13,6 @@ const checkDir = str => {
     catch(err) {
         console.error(err);
     }
-    
 }
 
 const deleteFile = (dir, title, ext) => {

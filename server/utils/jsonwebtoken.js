@@ -2,7 +2,14 @@ const jwt = require('jsonwebtoken');
 
 // 로그인 지속시간은 1시간. 
 const createAccessToken = (uid) => {
-    return jwt.sign({ _id: uid }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    try {
+        console.log('uidddddddddddddddddd', uid);
+        return jwt.sign({ _id: uid }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    }
+    catch(err) {
+        console.error(err);
+    }
+    
 }
 
 // 프론트쪽에 보낼때는 body에 넣어서, 올때는 header에 넣어서!

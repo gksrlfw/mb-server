@@ -41,36 +41,30 @@ exports.login = async (req, res, next) => {
         const { email, password } = req.body;
         const error = await loginValidation({ email, password });
         if(typeof error !== 'undefined') return res.status(403).send(error);
+        console.log("11111111111111111111111111111111111111");
+        passport.authenticate('local', (authError, user, info) => {
+            if(authError) {
+                console.error("error: ",authError);
+                return res.status(info.status).send(info.message);    
+            }
+            if(!user) return res.status(info.status).send(info.message);
+            return req.login(user, (pwdError) => {
+                if(pwdError) return res.send(pwdError);
+                console.log(2222222222, user);
+                const accessToken = createAccessToken(user.UID);
+                console.log(33333333333, accessToken, user);
+                return res.status(info.status).send({
+                    token: accessToken,
+                    nick: user.NICK,
+                    email: user.EMAIL,
+                    id: user.UID 
+                });
+            });
+        })(req, res, next);
     }
     catch(err) {
         next(err);
     }
-    console.log("11111111111111111111111111111111111111");
-    passport.authenticate('local', (authError, user, info) => {
-        if(authError) {
-            console.error("error: ",authError);
-            return res.status(info.status).send(info.message);    
-        }
-        if(!user) return res.status(info.status).send(info.message);
-        return req.login(user, (pwdError) => {
-            if(pwdError) return res.send(pwdError);
-            console.log(2222222222, user);
-            const accessToken = createAccessToken(user.UID);
-            // return res.status(info.status).header('auth_token', accessToken).send({
-            //    nick: user.NICK,
-            //    email: user.EMAIL,
-            //    id: user.UID 
-            // });
-            console.log(2222222222, accessToken, user);
-            return res.status(info.status).send({
-                token: accessToken,
-                nick: user.NICK,
-                email: user.EMAIL,
-                id: user.UID 
-            });
-            
-        });
-    })(req, res, next);
 };
 
 exports.logout = async (req, res, next) => {

@@ -7,9 +7,12 @@ const { checkDir } = require('./fs');
 
 // https://www.zerocho.com/category/NodeJS/post/5950a6c4f7934c001894ea83
 
+checkDir('/public/images');
+checkDir('/public/videos');
 checkDir('/public/images/profiles');
 checkDir('/public/images/lessons');
 checkDir('/public/videos/lessons');
+checkDir('/public/videos/m3u8');
 
 
 const uploadProfileImageM = multer({
