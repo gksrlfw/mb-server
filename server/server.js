@@ -37,8 +37,7 @@ db.connect((err) => {
 const sessionOption = {
   resave: false,
   saveUninitialized: false,
-  // secret: process.env.COOKIE_SECRET,
-  secret: 'cookiesecret',
+  secret: process.env.COOKIE_SECRET,
   cookie: {
     httpOnly: true,
     secure: false,
@@ -76,8 +75,7 @@ app.use('/video/lesson', express.static(path.join(__dirname, 'public/videos/less
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(cookieParser('cookiesecret'));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
