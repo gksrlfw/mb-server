@@ -81,19 +81,45 @@ class LessonService {
             console.error(err);
         }
     }
-    async writeLesson(nickname, detail, content, isProfile, imageInfo, videoInfo) {
-        // try {
-        //     console.log('service: write lesson');
-        //     let SQL, [results, fields];
-        //     if(isProfile) {
-        //         SQL = `SELECT * FROM CATEGORY WHERE TITLE=?`;
-        //         [results, fields] = await this.db.promise().execute(SQL, [category]);
-        //         if(!results.length) return { status: 403, message: '존재하지 않는 필터입니다!' }
-        //     }
-        // }
-        // catch(err) {
-        //     console.error(err);
-        // }
+    async writeLesson(title, nickname, detail, content, isProfile, imageInfo, videoInfo) {
+        try {
+            console.log('service: write lesson');
+            let SQL, [results, fields] = [], LID=null, CID=null;
+
+            SQL = `SELECT * FROM CATEGORY WHERE TITLE=?`;
+            [results, fields] = await this.db.promise().execute(SQL, [detail.category]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 카테고리입니다!' };
+            CID = results[0].CAID;
+            
+            
+            SQL = `SELECT * FROM LOCATIONS WHERE LOC=?`;
+            [results, fields] = await this.db.promise().execute(SQL, [detail.location]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 지역입니다!' };
+            LID = results[0].LOCID;
+            
+            if(isProfile) isProfile='T';
+            else isProfile='N';
+
+            SQL = `INSERT INTO LESSONS(TITLE, CONTENT, PRICE, IMAGE_PATH, VIDEO_PATH, IS_PROFILE, L_NICK, L_CAID, L_LOCID) 
+            VALUES(?,?,?,?,?,?,?,?,?);`;
+            await db.promise().execute(SQL, [title, content, detail.price, imageInfo, videoInfo, isProfile, nickname, CID, LID]);
+            return { status: 200, message: 'success' };
+        }
+        catch(err) {
+            console.error(err);
+        }
+    }
+    async getOneLesson(lid) {
+        try {
+            console.log('service: getOneLesson');
+            let SQL = `SELECT * FROM LESSONS WHERE LID=?`;
+            const [results, fields] = await this.db.promise().execute(SQL, [lid]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 게시글입니다! '};
+            return { status:200, message: results[0] };
+        }
+        catch(err) {
+            console.error(err);
+        }
     }
 }
 

@@ -21,17 +21,15 @@ exports.getLessons = async (req, res, next) => {
 */
 exports.writeLesson = async (req, res, next) => {
     try {
-        const { nickname, detail, content, imageInfo, videoInfo, isProfile } = req.body;
+        const { title, nickname, detail, content, imagePath, videoPath, isProfile } = req.body;
         console.log('controllers: writeLesson');
+        console.log(title, nickname, detail, content, imagePath, imagePath, isProfile);
+        const { price, category, location } = detail;
+        const error = await writeLessonValidation({ title, nickname, content, price, category, location, isProfile });
+        if(typeof error !== 'undefined') return res.status(403).send(error);
 
-        // const error = await writeLessonValidation({ aboutMe, career });
-        // if(typeof error !== 'undefined') return res.status(403).send(error);
-
-        const { status, message } = await lessonServiceInstance.writeLesson(nickname, detail, content, isProfile, imageInfo, videoInfo, z);
+        const { status, message } = await lessonServiceInstance.writeLesson(title, nickname, detail, content, isProfile, imagePath, imagePath);
         res.status(status).send(message);
-        // res.status(200).send('hello');
-        
-        // await ffmpegFunctionPromise(videoInfo); // ffmpeg 실행
     }
     catch(err) {
         next(err);
@@ -57,6 +55,19 @@ exports.uploadLessonVideo = async (req, res, next) => {
         // res.json({ url: `/video/m3u8/${FILENAME}.m3u8` }); 
         res.send(req.file);
         ffmpegFunction(FILENAME, req.file.filename);
+    }
+    catch(err) {
+        next(err);
+    }
+};
+
+exports.getOneLesson = async (req, res, next) => {
+    try {
+        console.log('controllers: getOneLesson');  
+        const { lid } = req.params;
+        const { status, message } = await lessonServiceInstance.getOneLesson(lid);
+        console.log(status, message);
+        res.status(status).send(message);
     }
     catch(err) {
         next(err);

@@ -95,17 +95,13 @@ const writeLessonValidation = async (data) => {
     try {
         // required가 맞는가??...
         const schema = Joi.object({
+            title: Joi.string().min(2).max(100).required(),
             nickname: Joi.string().min(2).max(20).required(),
-            detail: Joi.object({
-                price: Joi.string().required(),
-                category: Joi.string().required(),
-                location: Joi.string().required(),
-            }).with('price', 'category', 'location'),
+            price: Joi.string().required(),
+            category: Joi.string().required(),
+            location: Joi.string().required(),
             content: Joi.string().min(1).max(1000).required(),
-            imagePath: Joi.string().max(200).required(),
-            videoPath: Joi.string().max(200).required(),
             isProfile: Joi.boolean().required(),
-
         });
         await schema.validateAsync(data);
     }
@@ -117,4 +113,4 @@ const writeLessonValidation = async (data) => {
 }
 
 module.exports = { emailValidation, loginValidation, joinValidation, profileValidation, passwordValidation, lessonFilterValidation,
-                    writeLessonValidation };
+    writeLessonValidation };

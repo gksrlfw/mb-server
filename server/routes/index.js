@@ -3,7 +3,7 @@ const router = express.Router();
 const { test, testDB, testpost, testpost2 } = require('../controllers/exam');
 const { authEmail, join, login, logout, relogin } = require('../controllers/auth');
 const { getUserProfile, editUserPassword, editUserProfile, getMyPage, uploadProfileImage } = require('../controllers/profile');
-const { getLessons, writeLesson, uploadLessonImage, uploadLessonVideo } = require('../controllers/lesson');
+const { getLessons, writeLesson, uploadLessonImage, uploadLessonVideo, getOneLesson } = require('../controllers/lesson');
 
 const { isLogin, isNotLogin } = require('../utils/authMiddleware');
 const { verifyToken } = require('../utils/jsonwebtoken');
@@ -24,23 +24,24 @@ router.get('/test/post2', testpost2);
 router.post('/auth/join/ecode', isNotLogin, authEmail);
 router.post('/auth/join', isNotLogin, join);
 router.post('/auth/login', isNotLogin, login);
-router.get('/auth/logout', isLogin, logout);       //
+router.get('/auth/logout', verifyToken, isLogin, logout);       //
 router.get('/auth/relogin', verifyToken, isLogin, relogin);     //
 
 /* User */
-router.get('/user/profile/:uid', isLogin, getUserProfile);             //
-router.put('/user/profile/edit/:uid', isLogin, editUserProfile);       //
-router.put('/user/profile/image/:uid', isLogin, uploadProfileImageM.single('profile'), uploadProfileImage);       // input 태그의 name과 일치해야 한다
-router.put('/user/profile/editpw/:uid', isLogin, editUserPassword);    //
-router.get('/user/mypage/:uid', isLogin, getMyPage);                   //
+router.get('/user/profile/:uid', verifyToken, isLogin, getUserProfile);             //
+router.put('/user/profile/edit/:uid', verifyToken, isLogin, editUserProfile);       //
+router.put('/user/profile/image/:uid', verifyToken, isLogin, uploadProfileImageM.single('profile'), uploadProfileImage);       // input 태그의 name과 일치해야 한다
+router.put('/user/profile/editpw/:uid', verifyToken, isLogin, editUserPassword);    //
+router.get('/user/mypage/:uid', verifyToken, isLogin, getMyPage);                   //
 
 /* Main */
 // router.get('/main', getMain);
 
 /* Lesson */
 router.get('/lesson', getLessons);
-router.post('/lesson/write', verifyToken, isLogin, writeLesson);
-router.post('/lesson/write/image', uploadLessonImageM.single('image'), uploadLessonImage);   // multer
-router.post('/lesson/write/video', uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
+router.post('/lesson/write', writeLesson);
+router.post('/lesson/write/image', verifyToken, isLogin, uploadLessonImageM.single('image'), uploadLessonImage);   // multer
+router.post('/lesson/write/video', verifyToken, isLogin, uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
+router.get('/lesson/:lid', getOneLesson);
 
 module.exports = router;
