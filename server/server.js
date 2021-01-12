@@ -58,10 +58,11 @@ if(process.env.NODE_ENV === 'production') {
 
   (async () => {
     try {
-      const SQL = `SELECT * FROM USERS`;
-      const [results, fields] = await db.promise().execute(SQL);
-      if(results.length) return;
+      // const SQL = `SELECT * FROM USERS`;
+      // const [results, fields] = await db.promise().execute(SQL);
+      // if(results.length) return;
       await deleteAll();
+      await createAll();
     }
     catch(err) {
       console.error(err);

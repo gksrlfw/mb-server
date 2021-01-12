@@ -115,6 +115,9 @@ class LessonService {
             let SQL = `SELECT * FROM LESSONS WHERE LID=?`;
             const [results, fields] = await this.db.promise().execute(SQL, [lid]);
             if(!results.length) return { status: 403, message: '존재하지 않는 게시글입니다! '};
+            let views = results[0].VIEWS + 1;
+            SQL = `UPDATE LESSONS SET VIEWS=? WHERE LID=?`;
+            await this.db.promise().execute(SQL, [views, lid]);
             return { status:200, message: results[0] };
         }
         catch(err) {
