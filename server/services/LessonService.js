@@ -81,19 +81,19 @@ class LessonService {
             console.error(err);
         }
     }
-    async writeLesson(nickname, detail, content, isProfile, imageInfo, videoInfo, isProfile) {
-        try {
-            console.log('service: write lesson');
-            let SQL, [results, fields];
-            if(isProfile) {
-                SQL = `SELECT * FROM CATEGORY WHERE TITLE=?`;
-                [results, fields] = await this.db.promise().execute(SQL, [category]);
-                if(!results.length) return { status: 403, message: '존재하지 않는 필터입니다!' }
-            }
-        }
-        catch(err) {
-            console.error(err);
-        }
+    async writeLesson(nickname, detail, content, isProfile, imageInfo, videoInfo) {
+        // try {
+        //     console.log('service: write lesson');
+        //     let SQL, [results, fields];
+        //     if(isProfile) {
+        //         SQL = `SELECT * FROM CATEGORY WHERE TITLE=?`;
+        //         [results, fields] = await this.db.promise().execute(SQL, [category]);
+        //         if(!results.length) return { status: 403, message: '존재하지 않는 필터입니다!' }
+        //     }
+        // }
+        // catch(err) {
+        //     console.error(err);
+        // }
     }
 }
 

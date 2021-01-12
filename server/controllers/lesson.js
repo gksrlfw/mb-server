@@ -27,7 +27,7 @@ exports.writeLesson = async (req, res, next) => {
         // const error = await writeLessonValidation({ aboutMe, career });
         // if(typeof error !== 'undefined') return res.status(403).send(error);
 
-        const { status, message } = await lessonServiceInstance.writeLesson(nickname, detail, content, isProfile, imageInfo, videoInfo, isProfile);
+        const { status, message } = await lessonServiceInstance.writeLesson(nickname, detail, content, isProfile, imageInfo, videoInfo, z);
         res.status(status).send(message);
         // res.status(200).send('hello');
         
@@ -52,9 +52,11 @@ exports.uploadLessonImage = async (req, res, next) => {
 
 exports.uploadLessonVideo = async (req, res, next) => {
     try {
-        console.log(req.file);  
-        // res.send({ message: req.file });
-        res.json({ url: `/video/lesson/${req.file.filename}` });
+        console.log(req.file);  // 업로드 정보를 가짐
+        const FILENAME = req.file.filename.split('.')[0];
+        // res.json({ url: `/video/m3u8/${FILENAME}.m3u8` }); 
+        res.send(req.file);
+        console.log(await ffmpegFunctionPromise(FILENAME, req.file.filename)); // ffmpeg 실행
     }
     catch(err) {
         next(err);
