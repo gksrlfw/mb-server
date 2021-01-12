@@ -100,7 +100,7 @@ const writeLessonValidation = async (data) => {
             price: Joi.string().required(),
             category: Joi.string().required(),
             location: Joi.string().required(),
-            content: Joi.string().min(1).max(1000).required(),
+            content: Joi.required(),
             isProfile: Joi.boolean().required(),
         });
         await schema.validateAsync(data);

@@ -25,6 +25,8 @@ const verifyToken = (req, res, next) => {
     }
     catch(err) {
         if(err.name === 'TokenExpiredError') {
+            req.logout();           
+            req.session.destroy();  
             return res.status(419).send('expired token');
         }
         res.status(400).send('invalid token');

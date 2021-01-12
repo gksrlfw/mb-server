@@ -32,7 +32,7 @@ class ProfileService {
     async editUserProfile(uid, aboutMe, career, imageInfo) {
         try {
             console.log('service: editUserProfile', aboutMe, career, imageInfo);
-            let SQL = `SELECT * FROM PROFILES WHERE P_UID=?`;
+            let SQL = `SELECT * FROM USERS WHERE P_UID=?`;
             let [results, fields] = await this.db.promise().execute(SQL, [uid]);
             if(!results.length) return { status: 403, message: '해당하는 유저가 존재하지 않습니다' };
 
