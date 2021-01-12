@@ -5,7 +5,7 @@
             "name": "server",
             "image": "gksrlfw/mb-server-server",
             "hostname": "server",
-            "essential": false,
+            "essential": true,
             "memory": 128
         },
         {
