@@ -23,10 +23,10 @@ after_success:
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
-  app: "mb-app"
-  env: "MbApp-env"
+  app: "mohobby"
+  env: "Mohobby-env"
   bucket_name: elasticbeanstalk-us-east-2-407538465392
-  bucket_path: "mb-app"
+  bucket_path: "mohobby"
   on:
     branch: master
 
