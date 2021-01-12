@@ -6,12 +6,10 @@ services:
   - docker
 
 before_install:
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository -y ppa:mc3man/trusty-media; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y ffmpeg; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install ffmpeg; fi
-  - ffmpeg -hwaccels
+  - yum -y install epel-release
+  - rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+  - rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+  - yum install ffmpeg
 
 after_success:
   - docker build -t gksrlfw/mb-server-server ./server
