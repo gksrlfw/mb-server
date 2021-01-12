@@ -56,7 +56,7 @@ exports.uploadLessonVideo = async (req, res, next) => {
         const FILENAME = req.file.filename.split('.')[0];
         // res.json({ url: `/video/m3u8/${FILENAME}.m3u8` }); 
         res.send(req.file);
-        console.log(await ffmpegFunctionPromise(FILENAME, req.file.filename)); // ffmpeg 실행
+        ffmpegFunction(FILENAME, req.file.filename);
     }
     catch(err) {
         next(err);
