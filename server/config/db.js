@@ -37,7 +37,7 @@ option_docker = {
     dateStrings: 'date'
 }
 
-
+console.log('db options: ', option);
 const db = mysql.createConnection(option);
 
 module.exports = db;
