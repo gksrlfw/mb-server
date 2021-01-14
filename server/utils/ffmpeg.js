@@ -12,7 +12,7 @@ const ffmpegFunction = (FILENAME, filename) => {
             '-profile:v baseline',
             '-level 3.0',
             '-start_number 0',
-            '-hls_time 60',
+            '-hls_time 10',
             '-hls_list_size 0',
             '-f hls'
         ]).output(OUTPUT_PATH).on('end', (err, stderr) => {
