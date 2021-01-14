@@ -19,23 +19,6 @@ services:
       - /app/node_modules
       - ./server/:/app
     environment:                    
-      # PROD_HOST= mysql-express.cpn1atdn34ha.us-east-2.rds.amazonaws.com
-      # PROD_NAME= TEST
-      # PROD_USERNAME= admin 
-      # PROD_PASSWORD= password
-      # PROD_PORT= 3306
-      
-      # PORT= 3000
-
-      # COOKIE_SECRET= cookiesecret
-
-      # MAIL_EMAIL= gksrlfw@naver.com
-      # MAIL_PASSWORD= gksrlf784
-
-      # JWT_SECRET= jwtsecret
-
-
-      # =================================
       - CHOKIDAR_USEPOLLING=true
     ports:
       - "3000:3000"

@@ -5,9 +5,9 @@ sudo: required
 services:
   - docker
 
-before_install:
-  - yes '' | sudo add-apt-repository ppa:jonathonf/ffmpeg-4
-  - yes '' | sudo apt update && sudo apt install ffmpeg x264 x265
+# before_install:
+#   - yes '' | sudo add-apt-repository ppa:jonathonf/ffmpeg-4
+#   - yes '' | sudo apt update && sudo apt install ffmpeg x264 x265
 
 
 after_success:
