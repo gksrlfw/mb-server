@@ -22,8 +22,8 @@ exports.getLessons = async (req, res, next) => {
 exports.writeLesson = async (req, res, next) => {
     try {
         const { title, nickname, detail, content, imagePath, videoPath, isProfile } = req.body;
-        console.log('controllers: writeLesson');
-        console.log(title, nickname, detail, content, imagePath, imagePath, isProfile);
+        console.log('controllers: writeLesson', title, nickname, detail, content, imagePath, videoPath, isProfile);
+
         const { price, category, location } = detail;
         const error = await writeLessonValidation({ title, nickname, content, price, category, location, isProfile });
         if(typeof error !== 'undefined') return res.status(403).send(error);
@@ -61,12 +61,43 @@ exports.uploadLessonVideo = async (req, res, next) => {
     }
 };
 
-exports.getOneLesson = async (req, res, next) => {
+exports.getLessonInfo = async (req, res, next) => {
     try {
-        console.log('controllers: getOneLesson');  
+        console.log('controllers: getLessonInfo');  
         const { lid } = req.params;
-        const { status, message } = await lessonServiceInstance.getOneLesson(lid);
-        console.log(status, message);
+        
+        const { status, message } = await lessonServiceInstance.getLessonInfo(lid);
+        res.status(status).send(message);
+    }
+    catch(err) {
+        next(err);
+    }
+};
+
+exports.updateLessonInfo = async (req, res, next) => {
+    try {
+        const { title, nickname, detail, content, imagePath, videoPath, isProfile } = req.body;
+        console.log('controllers: updateLessonInfo', title, nickname, detail, content, imagePath, videoPath, isProfile);  
+        const { lid } = req.params;
+
+        const { price, category, location } = detail;
+        const error = await writeLessonValidation({ title, nickname, content, price, category, location, isProfile });
+        if(typeof error !== 'undefined') return res.status(403).send(error);
+        
+        const { status, message } = await lessonServiceInstance.updateLessonInfo(lid, title, nickname, detail, content, imagePath, videoPath, isProfile);
+        res.status(status).send(message);
+    }
+    catch(err) {
+        next(err);
+    }
+};
+
+exports.deleteLessonInfo = async (req, res, next) => {
+    try {
+        console.log('controllers: deleteLessonInfo');  
+        const { lid } = req.params;
+        
+        const { status, message } = await lessonServiceInstance.deleteLessonInfo(lid);
         res.status(status).send(message);
     }
     catch(err) {

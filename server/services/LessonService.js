@@ -109,16 +109,77 @@ class LessonService {
             console.error(err);
         }
     }
-    async getOneLesson(lid) {
+    async getLessonInfo(lid) {
         try {
-            console.log('service: getOneLesson');
+            console.log('service: getLessonInfo');
             let SQL = `SELECT * FROM LESSONS WHERE LID=?`;
-            const [results, fields] = await this.db.promise().execute(SQL, [lid]);
+            let [results, fields] = await this.db.promise().execute(SQL, [lid]);
             if(!results.length) return { status: 403, message: '존재하지 않는 게시글입니다! '};
+            if(results[0].DELETE_AD === 'Y') return { status: 403, message: '이미 삭제된 게시글입니다! '};
+
+            let lessonData = results[0];
             let views = results[0].VIEWS + 1;
+            if(results[0].IS_PROFILE) {
+                SQL = `SELECT * FROM PROFILES WHERE P_UID = (SELECT UID FROM USERS WHERE NICK=?)`;
+                [results, fields] = await this.db.promise().execute(SQL, [results[0].L_NICK]);
+                lessonData.aboutMe = results[0].ABOUT_ME;
+                lessonData.career = results[0].CAREER;
+            }
+            
             SQL = `UPDATE LESSONS SET VIEWS=? WHERE LID=?`;
             await this.db.promise().execute(SQL, [views, lid]);
-            return { status:200, message: results[0] };
+            return { status:200, message: lessonData };
+        }
+        catch(err) {
+            console.error(err);
+        }
+    }
+
+    async updateLessonInfo(lid, title, nickname, detail, content, isProfile, imageInfo, videoInfo) {
+        try {
+            console.log('service: updateLessonInfo');
+            let SQL = `SELECT * FROM LESSONS WHERE LID=?`;
+            let [results, fields] = await this.db.promise().execute(SQL, [lid]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 게시글입니다! '};
+            if(results[0].DELETE_AD === 'Y') return { status: 403, message: '이미 삭제된 게시글입니다! '};
+
+            let LID=null, CID=null;
+
+            SQL = `SELECT * FROM CATEGORY WHERE TITLE=?`;
+            [results, fields] = await this.db.promise().execute(SQL, [detail.category]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 카테고리입니다!' };
+            CID = results[0].CAID;
+            
+            SQL = `SELECT * FROM LOCATIONS WHERE LOC=?`;
+            [results, fields] = await this.db.promise().execute(SQL, [detail.location]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 지역입니다!' };
+            LID = results[0].LOCID;
+            
+            if(isProfile) isProfile='T';
+            else isProfile='N';
+
+            SQL = `UPDATE LESSONS SET UDAT=CURRENT_TIMESTAMP, TITLE=?, CONTENT=?, PRICE=?, IMAGE_PATH=?, VIDEO_PATH=?, IS_PROFILE=?, L_CAID=?, L_LOCID=? 
+                    WHERE LID=?`;
+            await this.db.promise().execute(SQL, [title, content, detail.price, imageInfo, videoInfo, isProfile, CID, LID, lid]);
+            return { status:200, message: 'success' };
+
+        }
+        catch(err) {
+            console.error(err);
+        }
+    }
+
+    async deleteLessonInfo(lid) {
+        try {
+            console.log('service: deleteLessonInfo');
+            let SQL = `SELECT * FROM LESSONS WHERE LID=?`;
+            let [results, fields] = await this.db.promise().execute(SQL, [lid]);
+            if(!results.length) return { status: 403, message: '존재하지 않는 게시글입니다! '};
+            if(results[0].DELETE_AD === 'Y') return { status: 403, message: '이미 삭제된 게시글입니다! '};
+
+            SQL = `UPDATE LESSONS SET DELETE_AT=? WHERE LID=?`;
+            [results, fields] = await this.db.promise().execute(SQL, ['T', lid]);
+            return { status:200, message: 'success'};
         }
         catch(err) {
             console.error(err);

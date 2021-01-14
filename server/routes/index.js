@@ -3,7 +3,7 @@ const router = express.Router();
 const { test, testDB, testpost, testpost2 } = require('../controllers/exam');
 const { authEmail, join, login, logout, relogin } = require('../controllers/auth');
 const { getUserProfile, editUserPassword, editUserProfile, getMyPage, uploadProfileImage } = require('../controllers/profile');
-const { getLessons, writeLesson, uploadLessonImage, uploadLessonVideo, getOneLesson } = require('../controllers/lesson');
+const { getLessons, writeLesson, uploadLessonImage, uploadLessonVideo, getLessonInfo, updateLessonInfo, deleteLessonInfo } = require('../controllers/lesson');
 
 const { isLogin, isNotLogin } = require('../utils/authMiddleware');
 const { verifyToken } = require('../utils/jsonwebtoken');
@@ -42,6 +42,9 @@ router.get('/lesson', getLessons);
 router.post('/lesson/write', writeLesson);
 router.post('/lesson/write/image', verifyToken, isLogin, uploadLessonImageM.single('image'), uploadLessonImage);   // multer
 router.post('/lesson/write/video', verifyToken, isLogin, uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
-router.get('/lesson/:lid', getOneLesson);
+router.get('/lesson/:lid', getLessonInfo);
+router.put('/lesson/update/:lid', updateLessonInfo);
+router.put('/lesson/delete/:lid', deleteLessonInfo);
+
 
 module.exports = router;
