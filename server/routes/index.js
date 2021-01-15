@@ -43,8 +43,8 @@ router.post('/lesson/write', writeLesson);
 router.post('/lesson/write/image', verifyToken, isLogin, uploadLessonImageM.single('image'), uploadLessonImage);   // multer
 router.post('/lesson/write/video', verifyToken, isLogin, uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer
 router.get('/lesson/:lid', getLessonInfo);
-router.put('/lesson/update/:lid', updateLessonInfo);
-router.put('/lesson/delete/:lid', deleteLessonInfo);
+router.put('/lesson/update/:lid', verifyToken, isLogin, updateLessonInfo);
+router.put('/lesson/delete/:lid', verifyToken, isLogin, deleteLessonInfo);
 
 
 module.exports = router;
