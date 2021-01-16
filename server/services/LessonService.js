@@ -5,6 +5,26 @@ class LessonService {
     constructor(db) {
         this.db = db;
     }
+
+    async getFilterInfo() {
+        try {
+            console.log('service: getFilterInfo');
+            let result = [];
+            let SQL = `SELECT TITLE FROM CATEGORY`;
+            let [results, fields] = await this.db.promise().execute(SQL);
+            let category = results;
+
+            SQL = `SELECT LOC FROM LOCATIONS`;
+            [results, fields] = await this.db.promise().execute(SQL);
+            let location = results;
+            
+            return { status: 200, message: { category, location } };
+        }
+        catch(err) {
+            console.error(err);
+        }
+    }
+
     async getLessons(category, price, location) {
         try {
             console.log('service: getLessons', category, price, location);  // 공부, [500, 1000], 부산
@@ -81,6 +101,7 @@ class LessonService {
             console.error(err);
         }
     }
+
     async writeLesson(title, nickname, detail, content, isProfile, imageInfo, videoInfo) {
         try {
             console.log('service: write lesson');

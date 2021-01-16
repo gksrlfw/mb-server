@@ -15,6 +15,17 @@ exports.getLessons = async (req, res, next) => {
     }
 };
 
+exports.getFilterInfo = async (req, res, next) => {
+    try {
+        console.log('controllers: getFilterInfo');
+        const { status, message } = await lessonServiceInstance.getFilterInfo();
+        res.send({ status, message });
+    }
+    catch(err) {
+        next(err);
+    }
+};
+
 /*
     multer로 이미지, 동영상 받을 수 있도록 만들기
     만약 동영상이 들어오면 ffmpeg 실행
