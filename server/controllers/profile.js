@@ -7,7 +7,7 @@ exports.getUserProfile = async (req, res, next) => {
     try {
         const { uid } = req.params;
         const { status, message } = await profileServiceInstance.getUserProfile(uid);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -21,10 +21,10 @@ exports.editUserProfile = async (req, res, next) => {
         const { aboutMe, career, imageInfo } = req.body;
 
         const error = await profileValidation({ aboutMe, career });
-        if(typeof error !== 'undefined') return res.status(403).send(error);
+        if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
 
         const { status, message } = await profileServiceInstance.editUserProfile(uid, aboutMe, career, imageInfo);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -37,10 +37,10 @@ exports.editUserPassword = async (req, res, next) => {
         const { password } = req.body;
 
         const error = await passwordValidation({ password });
-        if(typeof error !== 'undefined') return res.status(403).send(error);
+        if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
 
         const { status, message } = await userServiceInstance.editUserPassword(uid, password);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -51,7 +51,7 @@ exports.getMyPage = async (req, res, next) => {
     try {
         const { uid } = req.params;
         const { status, message } = await profileServiceInstance.getMyPage(uid);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -62,7 +62,7 @@ exports.uploadProfileImage = async (req, res, next) => {
     try {
         console.log(req.file);  // 업로드 정보를 가짐
         // res.send({ message: req.file });
-        res.json({ url: `/api/image/profile/${req.file.filename}` });
+        res.json({ status: 200, url: `/api/image/profile/${req.file.filename}` });
     }
     catch(err) {
         next(err);

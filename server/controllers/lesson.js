@@ -8,7 +8,7 @@ exports.getLessons = async (req, res, next) => {
         console.log('controllers: getLessons');
 
         const { status, message } = await lessonServiceInstance.getLessons(category, price, location);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -26,10 +26,10 @@ exports.writeLesson = async (req, res, next) => {
 
         const { price, category, location } = detail;
         const error = await writeLessonValidation({ title, nickname, content, price, category, location, isProfile });
-        if(typeof error !== 'undefined') return res.status(403).send(error);
+        if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
 
         const { status, message } = await lessonServiceInstance.writeLesson(title, nickname, detail, content, isProfile, imagePath, imagePath);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -41,7 +41,7 @@ exports.uploadLessonImage = async (req, res, next) => {
         console.log(req.file);  // 업로드 정보를 가짐
         // res.send({ message: req.file });    
         // express.static을 통해 실제 파일은 /public/images/lessons에 있지만 요청은 img/lesson으로 한다
-        res.json({ url: `/api/image/lesson/${req.file.filename}` }); 
+        res.json({ status: 200, url: `/api/image/lesson/${req.file.filename}` }); 
     }
     catch(err) {
         next(err);
@@ -53,7 +53,7 @@ exports.uploadLessonVideo = async (req, res, next) => {
         console.log(req.file);  // 업로드 정보를 가짐
         const FILENAME = req.file.filename.split('.')[0];
         // res.json({ url: `/video/m3u8/${FILENAME}.m3u8` }); 
-        res.send(req.file);
+        res.send({ status: 200, file: req.file });
         ffmpegFunction(FILENAME, req.file.filename);
     }
     catch(err) {
@@ -67,7 +67,7 @@ exports.getLessonInfo = async (req, res, next) => {
         const { lid } = req.params;
         
         const { status, message } = await lessonServiceInstance.getLessonInfo(lid);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -82,10 +82,10 @@ exports.updateLessonInfo = async (req, res, next) => {
 
         const { price, category, location } = detail;
         const error = await writeLessonValidation({ title, nickname, content, price, category, location, isProfile });
-        if(typeof error !== 'undefined') return res.status(403).send(error);
+        if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
         
         const { status, message } = await lessonServiceInstance.updateLessonInfo(lid, title, nickname, detail, content, imagePath, videoPath, isProfile);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
@@ -98,7 +98,7 @@ exports.deleteLessonInfo = async (req, res, next) => {
         const { lid } = req.params;
         
         const { status, message } = await lessonServiceInstance.deleteLessonInfo(lid);
-        res.status(status).send(message);
+        res.send({ status, message });
     }
     catch(err) {
         next(err);
