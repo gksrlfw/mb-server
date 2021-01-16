@@ -23,6 +23,20 @@ class UserService {
             console.error(err);
         }
     }
+
+    async authNickname(email) {
+        try {
+            console.log('authNickname: service');
+            const SQL = `SELECT * FROM USERS WHERE NICK=?`;
+            let [results, fields] = await this.db.promise().execute(SQL, [email]);
+            if(results.length) return { status: 403, message: '이미 가입되어있는 닉네임입니다. 다른 닉네임으로 시도해주세요' };
+            return { status: 200, message: 'success' };
+        }
+        catch(err) {
+            console.error(err);
+        }
+    }
+
     /* authMail을 안했으면 이게 안되게 해줘야하는데... 디비에서 검사하는거 이외에 방법을 모르겠다. 프론트에서 해결해달라고 하자.. */
     async join(email, password, nick) {
         try {

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { test, testDB, testpost, testpost2 } = require('../controllers/exam');
-const { authEmail, join, login, logout, relogin } = require('../controllers/auth');
+const { authEmail, authNickname, join, login, logout, relogin } = require('../controllers/auth');
 const { getUserProfile, editUserPassword, editUserProfile, getMyPage, uploadProfileImage } = require('../controllers/profile');
-const { getLessons, writeLesson, uploadLessonImage, uploadLessonVideo, getLessonInfo, updateLessonInfo, deleteLessonInfo } = require('../controllers/lesson');
+const { getLessons, getFilterInfo, writeLesson, uploadLessonImage, uploadLessonVideo, getLessonInfo, updateLessonInfo, deleteLessonInfo } = require('../controllers/lesson');
 
 const { isLogin, isNotLogin } = require('../utils/authMiddleware');
 const { verifyToken } = require('../utils/jsonwebtoken');
@@ -22,6 +22,7 @@ router.get('/test/post2', testpost2);
 
 /* Auth */
 router.post('/auth/join/ecode', isNotLogin, authEmail);
+router.post('/auth/join/nickname', isNotLogin, authNickname);
 router.post('/auth/join', isNotLogin, join);
 router.post('/auth/login', isNotLogin, login);
 router.get('/auth/logout', verifyToken, isLogin, logout);       //
@@ -39,6 +40,7 @@ router.get('/user/mypage/:uid', verifyToken, isLogin, getMyPage);               
 
 /* Lesson */
 router.get('/lesson', getLessons);
+router.get('/lesson/filter', getFilterInfo);
 router.post('/lesson/write', writeLesson);
 router.post('/lesson/write/image', verifyToken, isLogin, uploadLessonImageM.single('image'), uploadLessonImage);   // multer
 router.post('/lesson/write/video', verifyToken, isLogin, uploadLessonVideoM.single('video'), uploadLessonVideo);   // multer

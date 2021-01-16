@@ -2,7 +2,7 @@ const db = require('../config/db');
 const passport = require('passport');
 
 const userServiceInstance = require('../services/UserService');
-const { emailValidation, loginValidation, joinValidation } = require('../utils/validation');
+const { emailValidation, nicknameValidation, loginValidation, joinValidation } = require('../utils/validation');
 const { createAccessToken } = require('../utils/jsonwebtoken');
 
 exports.authEmail = async (req, res, next) => {
@@ -13,6 +13,21 @@ exports.authEmail = async (req, res, next) => {
         if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
 
         const { status, message } = await userServiceInstance.authEmail(email);
+        res.send({ status, message });
+    }
+    catch(err) {
+        next(err);
+    }
+};
+
+exports.authNickname = async (req, res, next) => {
+    try {
+        console.log('authNickname: controllers');
+        const { nickname } = req.body;
+        const error = await nicknameValidation({ nickname });
+        if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
+
+        const { status, message } = await userServiceInstance.authNickname(nickname);
         res.send({ status, message });
     }
     catch(err) {

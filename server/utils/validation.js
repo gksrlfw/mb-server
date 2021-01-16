@@ -15,6 +15,20 @@ const emailValidation = async (data) => {
     }
 }
 
+const nicknameValidation = async (data) => {
+    try {
+        const schema = Joi.object({
+            nickname: Joi.string().min(2).max(20).required()
+        });
+        await schema.validateAsync(data);    
+    }
+    catch(err) {
+        console.error(err);
+        err.message = '입력 문자 형식을 지켜주세요! (2 ~ 20 자리로 입력해주세요)';
+        return err.message;
+    }
+}
+
 const joinValidation = async (data) => {
     try {
         const schema = Joi.object({
@@ -112,5 +126,5 @@ const writeLessonValidation = async (data) => {
     }
 }
 
-module.exports = { emailValidation, loginValidation, joinValidation, profileValidation, passwordValidation, lessonFilterValidation,
+module.exports = { emailValidation, nicknameValidation, loginValidation, joinValidation, profileValidation, passwordValidation, lessonFilterValidation,
     writeLessonValidation };
