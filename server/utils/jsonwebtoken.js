@@ -16,7 +16,7 @@ const createAccessToken = (uid) => {
 const verifyToken = (req, res, next) => {
     // const { token } = req.body;
     const token = req.header('auth-token');
-    if(!token) return res.status(401).send('Access Denied');
+    if(!token) return res.send({ status: 401, message: 'Access Denied' });
     try {
         const verified = jwt.verify(token, process.env.JWT_SECRET);
         // 생각해보니 id를 프론트에서 굳이 받을필요 없이, 토큰을 인증하고 나온 req.user로 진행해도 될 것 같다.. 
@@ -27,9 +27,9 @@ const verifyToken = (req, res, next) => {
         if(err.name === 'TokenExpiredError') {
             req.logout();           
             req.session.destroy();  
-            return res.status(419).send('expired token');
+            return res.send({ status: 419, message: 'expired token' });
         }
-        res.status(400).send('invalid token');
+        res.send({ status: 400, message: 'invalid token' });
     }
 }
 

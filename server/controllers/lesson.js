@@ -24,6 +24,7 @@ exports.writeLesson = async (req, res, next) => {
         const { title, nickname, detail, content, imagePath, videoPath, isProfile } = req.body;
         console.log('controllers: writeLesson', title, nickname, detail, content, imagePath, videoPath, isProfile);
 
+        if(!detail) return res.send({ status: 403, message: 'detail은 price, category, location이 필요합니다!' });
         const { price, category, location } = detail;
         const error = await writeLessonValidation({ title, nickname, content, price, category, location, isProfile });
         if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
