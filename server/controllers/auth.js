@@ -22,7 +22,7 @@ exports.authEmail = async (req, res, next) => {
 
 exports.authNickname = async (req, res, next) => {
     try {
-        console.log('authNickname: controllers');
+        console.log('authNickname: controller');
         const { nickname } = req.body;
         const error = await nicknameValidation({ nickname });
         if(typeof error !== 'undefined') return res.send({ status: 403, message: error });
