@@ -20,15 +20,15 @@ after_success:
   - docker push gksrlfw/mb-server-nginx
 
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "mohobby"
-  env: "Mohobby-env"
-  bucket_name: elasticbeanstalk-us-east-2-407538465392
-  bucket_path: "mohobby"
-  on:
-    branch: master
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-2"
+#   app: "mohobby"
+#   env: "Mohobby-env"
+#   bucket_name: elasticbeanstalk-us-east-2-407538465392
+#   bucket_path: "mohobby"
+#   on:
+#     branch: master
 
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+#   access_key_id: $AWS_ACCESS_KEY
+#   secret_access_key: $AWS_SECRET_KEY
